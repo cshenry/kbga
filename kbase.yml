@@ -1,0 +1,14 @@
+module-name:
+    kbga
+
+module-description:
+    SDK version of Genome Annotation which is based on RAST.
+
+service-language:
+    perl
+
+module-version:
+    0.0.1
+
+owners:
+    [scanon]
