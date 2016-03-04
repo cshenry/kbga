@@ -1,8 +1,11 @@
 package kbga::kbgaImpl;
 use strict;
 use Bio::KBase::Exceptions;
+use Bio::KBase::GenomeAnnotation::GenomeAnnotationImpl;
+
+
 # Use Semantic Versioning (2.0.0-rc.1)
-# http://semver.org 
+# http://semver.org
 our $VERSION = "0.1.0";
 
 =head1 NAME
@@ -21,6 +24,21 @@ use Bio::KBase::AuthToken;
 use Bio::KBase::workspace::Client;
 use Config::IniFiles;
 use Data::Dumper;
+########################################################################
+# Authors: Shane Canon, Christopher Henry
+# Date: 11/14/2016
+# Contact email: chenry@mcs.anl.gov
+# Development location: Mathematics and Computer Science Division, Argonne National Lab
+########################################################################
+use warnings;
+use JSON::XS;
+use DateTime;
+use Digest::MD5;
+use Getopt::Long;
+use Bio::KBase::GenomeAnnotation::Client;
+use kbga::gawrapper;
+use Bio::KBase::workspace::ScriptHelpers qw(get_ws_client workspace workspaceURL parseObjectMeta parseWorkspaceMeta printObjectMeta);
+
 #END_HEADER
 
 sub new
@@ -30,14 +48,14 @@ sub new
     };
     bless $self, $class;
     #BEGIN_CONSTRUCTOR
-    
+
     my $config_file = $ENV{ KB_DEPLOYMENT_CONFIG };
     my $cfg = Config::IniFiles->new(-file=>$config_file);
     my $wsInstance = $cfg->val('kbga','workspace-url');
     die "no workspace-url defined" unless $wsInstance;
-    
+
     $self->{'workspace-url'} = $wsInstance;
-    
+
     #END_CONSTRUCTOR
 
     if ($self->can('_init_instance'))
@@ -115,14 +133,14 @@ sub count_contigs
     my $ctx = $kbga::kbgaServer::CallContext;
     my($return);
     #BEGIN count_contigs
-    
+
     my $token=$ctx->token;
     my $wshandle=Bio::KBase::workspace::Client->new($self->{'workspace-url'},token=>$token);
     my $wsobj=$wshandle->get_objects([{workspace=>$workspace_name,name=>$contigset_id}]);
     my $contigcount=scalar (@{$wsobj->[0]{data}{contigs}});
 
     $return = { 'contig_count' => $contigcount };
-    
+
     #END count_contigs
     my @_bad_returns;
     (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
@@ -196,9 +214,9 @@ sub annotate_genome
     }
 
     my $ctx = $kbga::kbgaServer::CallContext;
-    my($return);
+    my ($return);
     #BEGIN annotate_genome
-    print $params;
+    kbga::gawrapper::annotate($self->{'workspace-url'}, $ctx->token,$params);
     $return={'workspace'=>'blah','id'=>'1'};
     #END annotate_genome
     my @_bad_returns;
@@ -214,7 +232,7 @@ sub annotate_genome
 
 
 
-=head2 version 
+=head2 version
 
   $return = $obj->version()
 

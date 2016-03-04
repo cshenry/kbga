@@ -42,12 +42,89 @@ eval {
 
 eval {
     my $obj_name = "contigset.1";
-    my $contig = {id => '1', length => 10, md5 => 'md5', sequence => 'agcttttcat'};
+    my $contig = {id => '1', length => 10, md5 => 'md5', sequence => 'atgatgataaatataaagaaaaaagaagtatcgatattattagtaatatt
+agcttgcctgttattaactcagtcagcttatgccgcagatttatttaccg
+tcccggagacagacaaatcaaagctgtggtttctggatatcttattcccg
+gacaatttagcggaaagtcccttagccagcacaatgacaatccttaacag
+cgctgttttactggttggtggcattttagctgcctacacactgattgccg
+gaaccatgtcaacggcacatgacggagaaatgctgggtaagaaatggtct
+tccatgtggttgcccgtaagaactgcattaggcacggcaatgatactccc
+ggcagcaggtggtttctgtgccgctcaggttatggtgctgtggatgatta
+atcagggagtcggtctggcagataccgtctggaatacctatgcatccaac
+ccctcagatggggctgttattaccacatctgcatcttatcaggagcttga
+tcgcatagcgaaaaccgcctttatcaataacgtctgtatgttaaaggcgg
+gagaattatggaagaaatcagcagcagccgatcccttcccgcacgtcacg
+cctgcgtttgaaatgacaccggagaaaggtgcctatttatacacatacag
+ttatggagccagcaatgccggtaatgatatgaataaaaatttactggtat
+ccaaggctgcatgtggaagcatcacgcttacagacccgaaggccaaagct
+tcttatgacgaacaggctaaagctcaggctaccattgctgctggcggcat
+gtatatggcttatatgccacaggatataaagacgaatatttcagatgtta
+ttgaggcacacaatgccgcatttatcggccttgataatagtatgaaaacg
+ctggctgaacagtatgtggccgataataatattgatattcagaccggaat
+aaacagcgcaacggcctcatatgtatccattattgatactgcagtacgaa
+cagttttctccactggcgaccagtgggatgatttcaaagagaatgtccag
+aaagacggatggtttatggctggcgcatggagtatgaaactgatccgtgt
+gcaggatgcgattaatggagcagctcataatcttcctgtagccgggcaag
+cgacaatggaatacggagatatattcgataacagcctgaacgcgattatg
+gcaaaagtggctcaagatatggcgaaatcaacgacagcttcaagatatgc
+gaatggtattgatgcgcaaaaccgaacggaagccaataccagtggtaaaa
+gtggtgtaggccctaaaacagatgatgctggaaaaatagtttcttctctt
+caaagtgaagccaataagagcatttctggtgcaatggcgggttttctcag
+ttccagcgttatcaatggaagaaaacaagggaaaatcgtctcgttctcga
+cggacacaaccgctgccaatttacaggcaataaacccgttattagctgtt
+aaagggcttggggatacgatcagtgccgctggctggacgttattagggag
+ttctgctgttgttggggcaggtcttggcgcatggacatcagcgactgcaa
+gctgggtatcgggtgcatttggcgctatggggattgttatgccactggtt
+atccctttatggatagctggcgatactttagccgtcgtcattcctatgct
+gccttacgtcatgtggtttggtgtttgcgtaggctggatgatcctgtgcc
+ttgaagcaatggtcgcagcaccattatgggtaataacacatttacatcca
+gatggtgatggcgtagtgggtcgtggtggcgctggttatggtctggtttt
+atcgttaaccatgcgaccagcgctaatgataacaggattaatagcagcct
+atacgatgctccctatccttggtgggatcgtcaacgaaacattctccggc
+gcttttggcatgatgtcagccaatgccgggataggtatcatcgagtcact
+ggctctcattgctgtttatattgcaatgatgttcacggtagtgaagaaat
+cactttcactgattcacatcatccctgatgaaattatgaagtggcttggt
+gttcatggtggtcagagcatgtcgggttacgcacagtcggcatcaaaagg
+tgttgaaggtgctatgtttaccaaaaccgtgttggatcaggtttcccata
+cctcaaatgcgatgggtaatcagatcaggaatgcgcaaattaacaaagac
+cgtgaacagcaacgtgagcttcaacaacagcaacaggctcaacaggggaa
+agcactggcggctaataaagccaatgatacgggatctgcattcagaactc
+atatgagtaatgctggcccacttgatcagcaggatgaatatcagtctctt
+gaaagtgctaactcggcttaccatgcagctgaggcagcagatgctattgg
+tgatacagcaggcgcagcaggttatatgaatgtagctcaaaaggctgcta
+acagagcggtatcgtttggtgaacataacagaccgttgctgcctgtaagt
+ttacaggcccaagcttcaccaattgaaagctttaaggctccagagaaagg
+gagcggtagtggatcttccggtggtagttcatcatcaaaagaaggtaatg
+atggaatgtga'};
     my $obj = {contigs => [$contig], id => 'id', md5 => 'md5', name => 'name',
             source => 'source', source_id => 'source_id', type => 'type'};
     $ws_client->save_objects({workspace => get_ws_name(), objects =>
             [{type => 'KBaseGenomes.ContigSet', name => $obj_name, data => $obj}]});
-    my $ret = $impl->annotate_genome(get_ws_name(), $obj_name);
+    my $params={"input_contigset"=>$obj_name,
+             "scientific_name"=>'bogus',
+             "domain"=>'B',
+             "genetic_code"=>'11',
+             "call_features_rRNA_SEED"=>'1',
+             "call_features_tRNA_trnascan"=>'1',
+             "call_selenoproteins"=>'1',
+             "call_pyrrolysoproteins"=>'1',
+             "call_features_repeat_region_SEED"=>'1',
+             "call_features_insertion_sequences"=>'0',
+             "call_features_strep_suis_repeat"=>'1',
+             "call_features_strep_pneumo_repeat"=>'1',
+             "call_features_crispr"=>'1',
+             "call_features_CDS_glimmer3"=>'1',
+             "call_features_CDS_prodigal"=>'1',
+             "annotate_proteins_kmer_v2"=>'1',
+             "kmer_v1_parameters"=>'1',
+             "annotate_proteins_similarity"=>'1',
+             "resolve_overlapping_features"=>'1',
+             "find_close_neighbors"=>'1',
+             "call_features_prophage_phispy"=>'0',
+             "output_genome"=>'genome.1',
+             "workspace"=>get_ws_name()
+           };
+    my $ret = $impl->annotate_genome($params);
     print $ret;
     done_testing(1);
 };

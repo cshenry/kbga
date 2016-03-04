@@ -1,5 +1,6 @@
 script_dir=$(dirname "$(readlink -f "$0")")
 export KB_DEPLOYMENT_CONFIG=$script_dir/../deploy.cfg
+export PERL5LIB=$PERL5LIB:/kb/module/genome_annotation/lib/
 WD=/kb/module/work
 if [ -f $WD/token ]; then
     cat $WD/token | xargs sh $script_dir/../bin/run_kbga_async_job.sh $WD/input.json $WD/output.json
