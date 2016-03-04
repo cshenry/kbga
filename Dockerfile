@@ -30,7 +30,12 @@ RUN \
     cd /kb/bootstrap/kb_prodigal && \
     ./build.prodigal /kb/runtime/
 
-RUN sed -i 's/capture_stderr/tee_stderr/' /kb/deployment/lib/Bio/KBase/GenomeAnnotation/GenomeAnnotationImpl.pm
+#RUN sed -i 's/capture_stderr/tee_stderr/' /kb/deployment/lib/Bio/KBase/GenomeAnnotation/GenomeAnnotationImpl.pm
+
+RUN \
+    cd /kb/deployment/services/kmer_annotation_figfam/ && \
+    sed 's|$KB_TOP/deployment.cfg|/kb/module/deploy.cfg|' -i ./start_service  && \
+    sed 's/8/1/' -i ./start_service 
 
 RUN mkdir /data && \
     mkdir /data/Data.may1 && \

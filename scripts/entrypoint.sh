@@ -5,7 +5,9 @@
 python ./scripts/prepare_deploy_cfg.py ./deploy.cfg ./work/config.properties
 
 export PATH=$PATH:$KB_TOP/services/genome_annotation/bin:$KB_TOP/services/cdmi_api/bin
+export KB_DEPLOYMENT_CONFIG=/kb/module/deploy.cfg
 
+( cd /kb/deployment/services/kmer_annotation_figfam/;./start_service & )
 if [ $# -eq 0 ] ; then
   sh ./scripts/start_server.sh
 elif [ "${1}" = "test" ] ; then
@@ -18,7 +20,6 @@ elif [ "${1}" = "init" ] ; then
   cd /data
   mkdir kmer
   cd kmer
-  export KB_DEPLOYMENT_CONFIG=/kb/module/deploy.cfg
   /kb/deployment/services/kmer_annotation_figfam/bin/kmer-figfam-update-data Release70 
   cd ..
   curl ftp://ftp.theseed.org/KmerClassification/Data.may1.tgz|tar xzf -
