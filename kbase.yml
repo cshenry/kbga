@@ -12,3 +12,6 @@ module-version:
 
 owners:
     [scanon]
+
+data-version:
+    0.1

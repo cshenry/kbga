@@ -15,6 +15,14 @@ elif [ "${1}" = "async" ] ; then
   sh ./scripts/run_async.sh
 elif [ "${1}" = "init" ] ; then
   echo "Initialize module"
+  cd /data
+  mkdir kmer
+  cd kmer
+  export KB_DEPLOYMENT_CONFIG=/kb/module/deploy.cfg
+  /kb/deployment/services/kmer_annotation_figfam/bin/kmer-figfam-update-data Release70 
+  cd ..
+  curl ftp://ftp.theseed.org/KmerClassification/Data.may1.tgz|tar xzf -
+  touch __READY__
 elif [ "${1}" = "bash" ] ; then
   bash
 elif [ "${1}" = "report" ] ; then

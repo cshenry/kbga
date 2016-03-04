@@ -45,7 +45,7 @@ sub annotate {
   $ctx->stderr($stderr);
 
   #Retrieving service client or server object
-  my $ws = get_ws_client($ws_url);
+  my $ws = new Bio::KBase::workspace::Client($ws_url,token => $token);
   my $input = {};
   print "Debug: wsurl=$ws_url token=$token params=$parameters\n";
   if ($parameters->{workspace} =~ m/^\d+$/) {

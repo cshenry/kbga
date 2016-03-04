@@ -26,13 +26,17 @@ RUN \
     cd /kb/bootstrap/kb_glimmer && \
     ./build.glimmer /kb/runtime/ && \
     cd /kb/bootstrap/kb_elph && \
-    ./build.elph /kb/runtime/
+    ./build.elph /kb/runtime/ && \
+    cd /kb/bootstrap/kb_prodigal && \
+    ./build.prodigal /kb/runtime/
 
 RUN sed -i 's/capture_stderr/tee_stderr/' /kb/deployment/lib/Bio/KBase/GenomeAnnotation/GenomeAnnotationImpl.pm
 
 RUN mkdir /data && \
     mkdir /data/Data.may1 && \
     mkdir /data/kmer
+
+RUN sed -i 's/->port/->port, Passive=>1/' /kb/deployment/plbin/kmer-figfam-update-data.pl
                                                            
 # -----------------------------------------
 
