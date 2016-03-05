@@ -15,7 +15,7 @@ kbga
 =head1 DESCRIPTION
 
 A KBase module: kbga
-This sample module contains one small method - count_contigs.
+This wraps genome_annotation which is based off of the SEED annotations.
 
 =cut
 
@@ -66,92 +66,6 @@ sub new
 }
 
 =head1 METHODS
-
-
-
-=head2 count_contigs
-
-  $return = $obj->count_contigs($workspace_name, $contigset_id)
-
-=over 4
-
-=item Parameter and return types
-
-=begin html
-
-<pre>
-$workspace_name is a kbga.workspace_name
-$contigset_id is a kbga.contigset_id
-$return is a kbga.CountContigsResults
-workspace_name is a string
-contigset_id is a string
-CountContigsResults is a reference to a hash where the following keys are defined:
-	contig_count has a value which is an int
-
-</pre>
-
-=end html
-
-=begin text
-
-$workspace_name is a kbga.workspace_name
-$contigset_id is a kbga.contigset_id
-$return is a kbga.CountContigsResults
-workspace_name is a string
-contigset_id is a string
-CountContigsResults is a reference to a hash where the following keys are defined:
-	contig_count has a value which is an int
-
-
-=end text
-
-
-
-=item Description
-
-Count contigs in a ContigSet
-contigset_id - the ContigSet to count.
-
-=back
-
-=cut
-
-sub count_contigs
-{
-    my $self = shift;
-    my($workspace_name, $contigset_id) = @_;
-
-    my @_bad_arguments;
-    (!ref($workspace_name)) or push(@_bad_arguments, "Invalid type for argument \"workspace_name\" (value was \"$workspace_name\")");
-    (!ref($contigset_id)) or push(@_bad_arguments, "Invalid type for argument \"contigset_id\" (value was \"$contigset_id\")");
-    if (@_bad_arguments) {
-	my $msg = "Invalid arguments passed to count_contigs:\n" . join("", map { "\t$_\n" } @_bad_arguments);
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'count_contigs');
-    }
-
-    my $ctx = $kbga::kbgaServer::CallContext;
-    my($return);
-    #BEGIN count_contigs
-
-    my $token=$ctx->token;
-    my $wshandle=Bio::KBase::workspace::Client->new($self->{'workspace-url'},token=>$token);
-    my $wsobj=$wshandle->get_objects([{workspace=>$workspace_name,name=>$contigset_id}]);
-    my $contigcount=scalar (@{$wsobj->[0]{data}{contigs}});
-
-    $return = { 'contig_count' => $contigcount };
-
-    #END count_contigs
-    my @_bad_returns;
-    (ref($return) eq 'HASH') or push(@_bad_returns, "Invalid type for return variable \"return\" (value was \"$return\")");
-    if (@_bad_returns) {
-	my $msg = "Invalid returns passed to count_contigs:\n" . join("", map { "\t$_\n" } @_bad_returns);
-	Bio::KBase::Exceptions::ArgumentValidationError->throw(error => $msg,
-							       method_name => 'count_contigs');
-    }
-    return($return);
-}
-
 
 
 

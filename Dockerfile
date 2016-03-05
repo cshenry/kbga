@@ -8,8 +8,15 @@ MAINTAINER KBase Developer
 # RUN apt-get update
 RUN cpanm -i Config::IniFiles
 
-RUN git clone https://github.com/kbase/genome_annotation && \
-   cp -a genome_annotation/lib/Bio lib/
+ADD ./bootstrap bootstrap
+
+RUN \
+    cd bootstrap && \
+    ./build.search_for_rnas /kb/runtime/ && \
+    ./build.glimmer /kb/runtime/ && \
+    ./build.elph /kb/runtime/ && \
+    ./build.prodigal /kb/runtime/ && \
+    cd .. && rm -rf bootstrap
 
 # Build kb_seed
 RUN cd /kb/dev_container/modules && \
@@ -18,17 +25,10 @@ RUN cd /kb/dev_container/modules && \
     git clone https://github.com/kbase/strep_repeats && \
     git clone https://github.com/kbase/kmer_annotation_figfam && \
     . /kb/dev_container/user-env.sh && \
-    cd kb_seed && make && make deploy 
+    cd kb_seed && make && make TARGET=/kb/deployment deploy && cd .. && \
+    cd strep_repeats && make && make TARGET=/kb/deployment deploy && cd ..&& \
+    cd genome_annotation && make && make TARGET=/kb/deployment deploy && cd ..
 
-RUN \
-    cd /kb/bootstrap/kb_search_for_rnas && \
-    ./build.search_for_rnas /kb/runtime/ && \
-    cd /kb/bootstrap/kb_glimmer && \
-    ./build.glimmer /kb/runtime/ && \
-    cd /kb/bootstrap/kb_elph && \
-    ./build.elph /kb/runtime/ && \
-    cd /kb/bootstrap/kb_prodigal && \
-    ./build.prodigal /kb/runtime/
 
 #RUN sed -i 's/capture_stderr/tee_stderr/' /kb/deployment/lib/Bio/KBase/GenomeAnnotation/GenomeAnnotationImpl.pm
 
@@ -46,6 +46,7 @@ RUN sed -i 's/->port/->port, Passive=>1/' /kb/deployment/plbin/kmer-figfam-updat
 # -----------------------------------------
 
 COPY ./ /kb/module
+
 RUN mkdir -p /kb/module/work
 
 WORKDIR /kb/module

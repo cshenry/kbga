@@ -20,7 +20,7 @@ elif [ "${1}" = "init" ] ; then
   cd /data
   mkdir kmer
   cd kmer
-  /kb/deployment/services/kmer_annotation_figfam/bin/kmer-figfam-update-data Release70 
+  /kb/deployment/services/kmer_annotation_figfam/bin/kmer-figfam-update-data Release70
   cd ..
   curl ftp://ftp.theseed.org/KmerClassification/Data.may1.tgz|tar xzf -
   touch __READY__

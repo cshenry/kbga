@@ -310,6 +310,10 @@
           "target_property": "call_features_prophage_phispy"
         },
         {
+          "input_parameter": "retain_old_anno_for_hypotheticals",
+          "target_property": "retain_old_anno_for_hypotheticals"
+        },
+        {
           "input_parameter": "output_genome",
           "generated_value": {
             "prefix": "genome_"

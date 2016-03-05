@@ -47,7 +47,6 @@ sub annotate {
   #Retrieving service client or server object
   my $ws = new Bio::KBase::workspace::Client($ws_url,token => $token);
   my $input = {};
-  print "Debug: wsurl=$ws_url token=$token params=$parameters\n";
   if ($parameters->{workspace} =~ m/^\d+$/) {
   	$input->{wsid} = $parameters->{workspace};
   } else {
