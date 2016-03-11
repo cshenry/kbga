@@ -27,7 +27,8 @@ RUN cd /kb/dev_container/modules && \
     . /kb/dev_container/user-env.sh && \
     cd kb_seed && make && make TARGET=/kb/deployment deploy && cd .. && \
     cd strep_repeats && make && make TARGET=/kb/deployment deploy && cd ..&& \
-    cd genome_annotation && make && make TARGET=/kb/deployment deploy && cd ..
+    cd genome_annotation && make && make TARGET=/kb/deployment deploy && cd .. && \
+    sed -i 's/print .*keeping.*/#ignore/'  /kb/deployment/lib/GenomeTypeObject.pm
 
 
 #RUN sed -i 's/capture_stderr/tee_stderr/' /kb/deployment/lib/Bio/KBase/GenomeAnnotation/GenomeAnnotationImpl.pm
