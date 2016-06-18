@@ -1,5 +1,5 @@
 module-name:
-    kbga
+    chenrykbga
 
 module-description:
     SDK version of Genome Annotation which is based on SEED and RAST.
