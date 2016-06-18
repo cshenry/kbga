@@ -13,7 +13,7 @@ module-version:
     0.0.1
 
 owners:
-    [scanon]
+    [chenry,scanon]
 
 data-version:
     0.1
