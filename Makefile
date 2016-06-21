@@ -1,7 +1,7 @@
-SERVICE = kbga
-SERVICE_CAPS = kbga
-SPEC_FILE = kbga.spec
-URL = https://kbase.us/services/kbga
+SERVICE = chenrykbga
+SERVICE_CAPS = chenrykbga
+SPEC_FILE = chenrykbga.spec
+URL = https://kbase.us/services/chenrykbga
 DIR = $(shell pwd)
 LIB_DIR = lib
 SCRIPTS_DIR = scripts

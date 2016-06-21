@@ -5,7 +5,7 @@ use Config::Simple;
 use Time::HiRes qw(time);
 use Bio::KBase::AuthToken;
 use Bio::KBase::workspace::Client;
-use kbga::kbgaImpl;
+use chenrykbga::chenrykbgaImpl;
 
 local $| = 1;
 my $token = $ENV{'KB_AUTH_TOKEN'};
@@ -16,13 +16,13 @@ my $ws_name = undef;
 my $ws_client = new Bio::KBase::workspace::Client($ws_url,token => $token);
 my $auth_token = Bio::KBase::AuthToken->new(token => $token, ignore_authrc => 1);
 my $ctx = LocalCallContext->new($token, $auth_token->user_id);
-$kbga::kbgaServer::CallContext = $ctx;
-my $impl = new kbga::kbgaImpl();
+$chenrykbga::chenrykbgaServer::CallContext = $ctx;
+my $impl = new chenrykbga::chenrykbgaImpl();
 
 sub get_ws_name {
     if (!defined($ws_name)) {
         my $suffix = int(time * 1000);
-        $ws_name = 'test_kbga_' . $suffix;
+        $ws_name = 'test_chenrykbga_' . $suffix;
         $ws_client->create_workspace({workspace => $ws_name});
     }
     return $ws_name;

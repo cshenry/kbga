@@ -3,7 +3,7 @@ The SDK version of the KBaase Genome Annotation Service.
 This wraps genome_annotation which is based off of the SEED annotations.
 */
 
-module kbga {
+module chenrykbga {
 	/*
 	A string representing a ContigSet id.
 	*/

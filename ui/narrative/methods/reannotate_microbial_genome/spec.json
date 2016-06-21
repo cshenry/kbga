@@ -234,7 +234,7 @@
   "behavior" : {
     "service-mapping" : {
       "url" : "",
-      "name" : "kbga",
+      "name" : "chenrykbga",
       "method" : "annotate_genome",
       "input_mapping" : [
         {

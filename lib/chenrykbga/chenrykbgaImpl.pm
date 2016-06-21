@@ -1,20 +1,17 @@
-package kbga::kbgaImpl;
+package chenrykbga::chenrykbgaImpl;
 use strict;
 use Bio::KBase::Exceptions;
-use Bio::KBase::GenomeAnnotation::GenomeAnnotationImpl;
-
-
 # Use Semantic Versioning (2.0.0-rc.1)
-# http://semver.org
+# http://semver.org 
 our $VERSION = "0.1.0";
 
 =head1 NAME
 
-kbga
+chenrykbga
 
 =head1 DESCRIPTION
 
-A KBase module: kbga
+The SDK version of the KBaase Genome Annotation Service.
 This wraps genome_annotation which is based off of the SEED annotations.
 
 =cut
@@ -36,7 +33,7 @@ use DateTime;
 use Digest::MD5;
 use Getopt::Long;
 use Bio::KBase::GenomeAnnotation::Client;
-use kbga::gawrapper;
+use chenrykbga::gawrapper;
 use Bio::KBase::workspace::ScriptHelpers qw(get_ws_client workspace workspaceURL parseObjectMeta parseWorkspaceMeta printObjectMeta);
 
 #END_HEADER
@@ -51,7 +48,7 @@ sub new
 
     my $config_file = $ENV{ KB_DEPLOYMENT_CONFIG };
     my $cfg = Config::IniFiles->new(-file=>$config_file);
-    my $wsInstance = $cfg->val('kbga','workspace-url');
+    my $wsInstance = $cfg->val('chenrykbga','workspace-url');
     die "no workspace-url defined" unless $wsInstance;
 
     $self->{'workspace-url'} = $wsInstance;
@@ -81,9 +78,9 @@ sub new
 
 <pre>
 $params is an UnspecifiedObject, which can hold any non-null object
-$return is a kbga.AnnotateGenomeResults
+$return is a chenrykbga.AnnotateGenomeResults
 AnnotateGenomeResults is a reference to a hash where the following keys are defined:
-	workspace has a value which is a kbga.workspace_name
+	workspace has a value which is a chenrykbga.workspace_name
 	id has a value which is a string
 workspace_name is a string
 
@@ -94,9 +91,9 @@ workspace_name is a string
 =begin text
 
 $params is an UnspecifiedObject, which can hold any non-null object
-$return is a kbga.AnnotateGenomeResults
+$return is a chenrykbga.AnnotateGenomeResults
 AnnotateGenomeResults is a reference to a hash where the following keys are defined:
-	workspace has a value which is a kbga.workspace_name
+	workspace has a value which is a chenrykbga.workspace_name
 	id has a value which is a string
 workspace_name is a string
 
@@ -108,7 +105,7 @@ workspace_name is a string
 =item Description
 
 annotate genome
-contigset_id - the ContigSet to count.
+params - a param hash that includes the workspace id and options
 
 =back
 
@@ -127,10 +124,10 @@ sub annotate_genome
 							       method_name => 'annotate_genome');
     }
 
-    my $ctx = $kbga::kbgaServer::CallContext;
-    my ($return);
+    my $ctx = $chenrykbga::chenrykbgaServer::CallContext;
+    my($return);
     #BEGIN annotate_genome
-    kbga::gawrapper::annotate($self->{'workspace-url'}, $ctx->token,$params);
+    chenrykbga::gawrapper::annotate($self->{'workspace-url'}, $ctx->token,$params);
     $return={'workspace'=>'blah','id'=>'1'};
     #END annotate_genome
     my @_bad_returns;
@@ -146,7 +143,7 @@ sub annotate_genome
 
 
 
-=head2 version
+=head2 version 
 
   $return = $obj->version()
 
@@ -246,36 +243,6 @@ a string
 
 
 
-=head2 CountContigsResults
-
-=over 4
-
-
-
-=item Definition
-
-=begin html
-
-<pre>
-a reference to a hash where the following keys are defined:
-contig_count has a value which is an int
-
-</pre>
-
-=end html
-
-=begin text
-
-a reference to a hash where the following keys are defined:
-contig_count has a value which is an int
-
-
-=end text
-
-=back
-
-
-
 =head2 AnnotateGenomeResults
 
 =over 4
@@ -288,7 +255,7 @@ contig_count has a value which is an int
 
 <pre>
 a reference to a hash where the following keys are defined:
-workspace has a value which is a kbga.workspace_name
+workspace has a value which is a chenrykbga.workspace_name
 id has a value which is a string
 
 </pre>
@@ -298,7 +265,7 @@ id has a value which is a string
 =begin text
 
 a reference to a hash where the following keys are defined:
-workspace has a value which is a kbga.workspace_name
+workspace has a value which is a chenrykbga.workspace_name
 id has a value which is a string
 
 
